@@ -100,7 +100,42 @@ void mystack<T>::display(){
 }
 
 
+
+
+
+
+void	 BracketMatchingFunction(string brac1,string brac2){
+	if (brac1 == "("&&brac2 == ")"){
+		cout << "Your entered brackects are correct " << endl;
+	}
+	 else if(brac1 == "("&&brac2 == ")"){
+		cout << "Your entered brackects are correct " << endl;
+	}
+	 else if (brac1 == "("&&brac2 == ")"){
+		cout << "Your entered brackects are correct " << endl;
+	}
+	 else{
+		 cout << "Your entered brackects are not correct " << endl;
+	 }
+
+}
+
 int main(){
+	string brc1;
+	string brc2;
+	cout << "Options to enter brackets :" << endl;
+	cout << "1.()" << endl;
+	cout << "2.{}" << endl;
+	cout << "3.[]" << endl;
+
+	cout << "Enter the first bracket :" << endl;
+	cin >> brc1;
+	cout << "Enter the second bracket :" << endl;
+	cin >> brc2;
+	BracketMatchingFunction(brc1, brc2);
+
+
+
 	mystack<int> obj(5);
 	obj.push(15);
 	obj.push(-3);
@@ -125,7 +160,7 @@ int main(){
 	obj3.display();
 
 
-
+	
 
 	return 0;
 	system("pause"); 

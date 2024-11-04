@@ -1,102 +1,132 @@
 #include <iostream>
+#include <string>
 using namespace std;
-template <typename T>
-class List{
-	protected:
-		int currentsize=0;
-		int maxsize;
-		T *arr;
-	public:
-		List() {};
-		List(int size);
-		~List();
-		List(List &ob);
-		virtual void AddValueFromStart(int value)=0;
-		virtual void AddValueFromEnd(int value) = 0;
-		virtual void RemoveElementFromStart()=0;
-		virtual void RemoveElementFromEnd() = 0;
-		virtual void display() = 0;
-		
-		
 
 
+template <class T>
+class Abstractstack{
+protected:
+	T *arr;
+	int maxsize;
+	int currentsize;
+public:
+	Abstractstack(int size);
+	~Abstractstack();
+	virtual void push(T value) = 0;
+	virtual bool isFull() = 0;
+	virtual T pop() = 0;
+	virtual T top() = 0;
+	virtual bool IsEmpty() = 0;
+	virtual T removevalue() = 0;
 };
-List::List(int size){
-	arr=new T[size];
-	maxsize=size;
-	currentsize=0;
 
-}
-List::~List(){
-			delete arr;
-		}
 
-List(List& ob) {
-	arr =ob.arr;
-	maxsize = ob.maxsize;
-	currentsize = ob.currentsize;
+template <class T>
+Abstractstack<T>::Abstractstack(int size){
+	currentsize = 0;
+	maxsize = size;
+	arr = new T[maxsize];
 }
-template <typename T>
-class Listderived:public List<T>{
-	public:
-		Listderived(){}
-		Listderived(int size):List(size){};
-		void AddValueFromStart(int value) ;
-	    void AddValueFromEnd(int value) ;
-	    void RemoveElementFromStart() ;
-	    void RemoveElementFromEnd() ;
-	    void display();
-		
+template <class T>
+Abstractstack<T>::~Abstractstack(){
+	delete[]arr;
+	arr = nullptr;
+}
+
+
+template <class T>
+class mystack :public Abstractstack<T>{
+public:
+	mystack(int size);
+	void push(T value);
+	bool isFull();
+	bool IsEmpty();
+	T pop() = 0;
+	T top() = 0;
+	void display();
 
 };
 
 
-void Listderived::AddValueFromStart(int value){
-	arr[currentsize]=value;
-	currentsize++;
-}
-void Listderived::AddValueFromEnd(int value) {
-	arr[maxsize-1] = value;
+template <class T>
+bool mystack<T>::isFull(){
 
+	return Abstractstack<T>::currentsize == Abstractstack<T>::maxsize;
+}
+template <class T>
+bool mystack<T>::IsEmpty(){
+	if (Abstractstack<T>:: == 0){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
 
-void Listderived::RemoveElementFromEnd(){
-	arr[currentsize]=0;
-	currentsize--;
-}
-void Listderived::RemoveElementFromStart() {
-	arr[0] = 0;
-	
-}
-void Listderived::display(){
-	cout<<"Current size :"<<currentsize<<endl;
-	cout<<"Total size :"<<maxsize<<endl;
-	
-
-		for(int i=0;i<maxsize;i++){
-		cout<<arr[i]<<endl;
+template <class T>
+void mystack<T>::push(T value){
+	if (isFull()){
+		cout << "The Abstractstack is full " << endl;
+	}
+	else{
+		Abstractstack<T>::arr[Abstractstack<T>::currentsize] = value;
+		Abstractstack<T>::currentsize++;
 	}
 
+}
+template <class T>
+T mystack<T>::top{
+	return Abstractstack<T>::arr[0] ;
+
+}template <class T>
+T mystack<T>::pop{
+	return Abstractstack<T>::arr[0];
+	Abstractstack<T>::currentsize--;
 
 }
+template <class T>
+T mystack<T>::removevalue(){
+	Abstractstack<T>::currentsize--;
+	return Abstractstack<T>::arr[Abstractstack<T>::currentsize];
+}
 
-
-
+template <class T>
+void mystack<T>::display(){
+	cout << "The maxsize " << Abstractstack<T>::maxsize << endl;
+	cout << "The currentsize " << Abstractstack<T>::currentsize << endl;
+	for (int i = 0; i<Abstractstack<T>::currentsize; i++){
+		cout << i << ". " << Abstractstack<T>::arr[i] << endl;
+	}
+}
 
 
 int main(){
+	mystack<int> obj(5);
+	obj.push(15);
+	obj.push(-3);
 
-	Listderived<int> obj(5);
-	obj.AddValueFromStart(1);
-	obj.AddValueFromStart(2);
-	obj.AddValueFromStart(3);
-	obj.AddValueFromStart(4);
-	obj.AddValueFromEnd(5);
-	obj.RemoveElementFromEnd();
-	obj.RemoveElementFromStart();
+	cout << "Display : " << endl;
+	obj.display();
 
-    obj.display();
-	
+	mystack<char> obj2(3);
+	obj2.push('A');
+	obj2.push('z');
+	obj2.push('@');
+	obj2.push('@');
+	cout << "Display: " << endl;
+	obj2.display();
+
+	mystack<string> obj3(7);
+	obj3.push("data");
+	obj3.push("Structures");
+	obj3.push("lecture");
+	obj3.push("D6");
+	cout << "Display: " << endl;
+	obj3.display();
+
+
+
+
 	return 0;
-	system("pause");
+	system("pause"); 
 }
