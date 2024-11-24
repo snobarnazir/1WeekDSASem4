@@ -12,12 +12,10 @@ public:
 	~stack();
 	virtual void push(T value)=0;
 	virtual T pop()=0;
-    virtual T top()=0;
 	virtual bool isEmpty()=0;
 	virtual bool isFull()=0;
 	
 };
-
 template <class T>
  stack<T>::stack(int size){
  	maxsize=size;
@@ -34,22 +32,18 @@ stack<T>::~stack(){
 template <class T>
 class mystack:public stack<T>{
 	public:
-    
+		
 	mystack(int size);
  	void push(T value);
 	T pop();
-	T top();
     bool isEmpty();
     bool isFull();
-    string InfinixToPrefix(string array);
+    void display();
 		
 };
-
-
 template <class T>
 mystack<T>::mystack(int size):stack<T>(size){
 }
-
 template <class T>
 bool mystack<T>::isFull(){
 	if(stack<T>::currentsize>=stack<T>::maxsize){
@@ -58,10 +52,9 @@ bool mystack<T>::isFull(){
 	else{
 		return false;
 	}
-		
+	
+	
 }
-
-
 template <class T>
 bool mystack<T>::isEmpty(){
    if(stack<T>::currentsize==0){
@@ -69,14 +62,9 @@ bool mystack<T>::isEmpty(){
    }
    	else{
 		return false;
-	}	
-}
-
-template <class T>
-T mystack<T>::top(){
-  
-  return stack<T>::arr[stack<T>::currentsize];
-		
+	}
+	
+	
 }
 
 template <class T>
@@ -88,9 +76,9 @@ void mystack<T>::push(T value){
 	stack<T>::arr[stack<T>::currentsize]=value;
 	stack<T>::currentsize++;
 	}
-		
+	
+	
 }
-
 template <class T>
 T mystack<T>::pop(){
 	if(isEmpty()){
@@ -99,57 +87,63 @@ T mystack<T>::pop(){
 	}
 	else{
 		
-	T value=stack<T>::arr[stack<T>::currentsize];
+	T value=	stack<T>::arr[stack<T>::currentsize];
      stack<T>::currentsize--;
      return value;
 	}
-  	
+    
+	
+	
+}
+template <class T>
+void mystack<T>::display(){
+	cout<<"currentsize "<<stack<T>::currentsize<<endl;
+	cout<<"maxsize "<<stack<T>::maxsize<<endl;
+    for(int i=0;i<stack<T>::currentsize;i++){
+    	cout<<i<<". "<<stack<T>::arr[i]<<endl;
+	}
+	
+	
 }
 
-template <class T>
-string mystack<T>::InfinixToPrefix(string array){
-  
-	  
-	string returnvalue;
-	mystack<char> obj(array.length());
-	
-	for(int i=0;i<array.length();i++){
-		
-	
-		if(isdigit(array[i])||array[i]==' '){
-			returnvalue+=array[i];
-		}
-		
-		else if(array[i]=='('||array[i]=='+'||array[i]=='-'||array[i]=='/'||array[i]=='*'){
-		  obj.push(array[i]);
-		  }
-                        
-		else if(array[i]==')'){
-	         while(!obj.isEmpty()&&obj.top()!='('){
-			returnvalue+=obj.top();  
-			obj.pop();
-			                      
-			}	
-		}
-			
-		
-		
-	  else if(!obj.isEmpty()){
-			returnvalue+=obj.top();
-			obj.pop();
-		}	
-}
-	return returnvalue;
-	  
-}
+
+
+
+
+
+
+
 
 
 int main(){
 	
-	 string  array="( ( ( 12 + 13 ) * ( 20 - 30 ) ) / ( 811 + 99 ) )";
-	 mystack<string> obj(array.length());
-     cout<<obj.InfinixToPrefix(array)<<endl;
-   	return 0;
+	mystack<int> obj(5);
+	obj.push(15);
+	obj.push(-3);
+
+	cout << "Display: " << endl;
+	obj.display();
+
+
+	mystack<char> obj2(10);
+	obj2.push('A');
+	obj2.push('z');
+	obj2.push('@');
+
+	cout << "Display: " << endl;
+	obj2.display();
+
+
+	mystack<string> s(7);
+	s.push("data");
+	s.push("Structures");
+	s.push("lecture");
+	s.push("D6");
+
+	cout << "Display: " << endl;
+	s.display();
+	
+	return 0;
 }
 
 
